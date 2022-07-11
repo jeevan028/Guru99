@@ -6,6 +6,7 @@
       <class name="Day1.Loginmodule">
         <methods>
           <include name="login"/>
+          <include name="CD"/>
         </methods>
       </class> <!-- Day1.Loginmodule -->
     </classes>

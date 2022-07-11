@@ -1,25 +1,45 @@
 package Day1;
 
+import static org.testng.Assert.assertEquals;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class Loginmodule {
+	WebDriver driver;
+
+	@BeforeTest
+	public void CD() {
+		WebDriverManager.chromedriver().setup();
+		driver=new ChromeDriver();
+	}
 
 	@Test
-	public void login() {
-		WebDriverManager.firefoxdriver().setup();
-		WebDriver driver=new FirefoxDriver();
-		driver.get("https://www.demo.guru99.com/V4/");
-		driver.findElement(By.xpath("//input[@type='text']")).sendKeys("mngr423708");
-		driver.findElement(By.xpath("//input[@type='password']")).sendKeys("EsygUgy");
+	public void login() throws IOException, InterruptedException {
+		Properties pro=new Properties();
+		FileInputStream fis=new FileInputStream("C:\\Users\\jeevan kumar\\eclipse-workspace\\Guru99\\Data.properties");
+		pro.load(fis);
+		driver.get(pro.getProperty("url"));
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys(pro.getProperty("uid"));
+		driver.findElement(By.xpath("//input[@type='password']")).sendKeys(pro.getProperty("pw"));
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
+		String title=driver.getTitle();
+		Assert.assertEquals(title,"Guru99 Bank Manager HomePage");
+		Thread.sleep(2000);
 		driver.close();
-
 	}
 
 }
