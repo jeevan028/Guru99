@@ -5,6 +5,7 @@ import static org.testng.Assert.assertEquals;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -29,6 +30,8 @@ public class Loginmodule {
 
 	@Test
 	public void login() throws IOException, InterruptedException {
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		//implicit wait will applicable to all webelements in the webpage it will wait untill the webelement loads
 		Properties pro=new Properties();
 		FileInputStream fis=new FileInputStream("C:\\Users\\jeevan kumar\\eclipse-workspace\\Guru99\\Data.properties");
 		pro.load(fis);
@@ -38,7 +41,6 @@ public class Loginmodule {
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 		String title=driver.getTitle();
 		Assert.assertEquals(title,"Guru99 Bank Manager HomePage");
-		Thread.sleep(2000);
 		driver.close();
 	}
 
